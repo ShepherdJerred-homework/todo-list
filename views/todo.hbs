@@ -10,10 +10,14 @@
     <td><input name="item{{key}}" type="checkbox" value="done" {{#if this.done}}checked{{/if}}/>
     <td>{{this.name}}
   {{/each}}
+  {{#if items.length}}
   <tr>
     <td colspan="2">
       <input type="submit" value="Save" formaction="/todo/save"/>
       <input type="submit" value="Remove Checked" formaction="/todo/remove"/>
+  {{else}}
+    <p>No to-do items
+  {{/if}}
 </table>
 </form>
 <p>
