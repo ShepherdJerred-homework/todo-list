@@ -2,10 +2,10 @@
   "name": "todo-list",
   "version": "1.0.0",
   "description": "Todo list web app",
-  "main": "lib/app/index.js",
+  "main": "lib/app/server/index.js",
   "scripts": {
-    "start": "node lib/app/index.js",
-    "dev": "nodemon lib/app/index.js",
+    "start": "node lib/app/server/index.js",
+    "dev": "nodemon lib/app/server/index.js",
     "test": "mocha lib/test/",
     "lint": "eslint lib/app/"
   },

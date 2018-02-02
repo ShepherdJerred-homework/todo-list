@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<link rel="stylesheet" href="/styles/todo.css">
 <link rel="stylesheet" href="/styles/normalize.css">
 <title>Todo</title>
-<h1>To-Do List</h1>
-<form method="post" action="/">
-<table>
-  {{#each items as |value key|}}
-  <tr>
-    <td><input name="item{{key}}" type="checkbox" value="done" {{#if this.done}}checked{{/if}}/>
-    <td>{{this.name}}
-  {{/each}}
-  {{#if items.length}}
-  <tr>
-    <td colspan="2">
-      <input type="submit" value="Save" formaction="/todo/save"/>
-      <input type="submit" value="Remove Checked" formaction="/todo/remove"/>
-  {{else}}
-    <p>No to-do items
-  {{/if}}
-</table>
-</form>
-<p>
-<form action="/todo/add/" method="post">
-  Add new item: <input type="text" placeholder="Enter item description"
-                       style="width: 60ex" name="item" autofocus required/>
-  <input type="button" value="Add"/>
-</form>
+<div class="todo--container">
+  <h1>To-Do List</h1>
+  <form method="post" action="/">
+    <table>
+      {{#each items as |value key|}}
+      <tr>
+        <td><input name="item{{key}}" type="checkbox" value="done" {{#if this.done}}checked{{/if}}/>
+      <td>{{this.name}}
+      {{/each}}
+      {{#if items.length}}
+      <tr>
+      <td colspan="2">
+        <input type="submit" value="Save" formaction="/todo/save"/>
+        <input type="submit" value="Remove Checked" formaction="/todo/remove"/>
+      {{else}}
+      <p>No to-do items
+      {{/if}}
+    </table>
+  </form>
+  <p>
+  <form action="/todo/add/" method="post">
+    Add new item: <input type="text" placeholder="Enter item description"
+                         style="width: 60ex" name="item" autofocus required/>
+    <input type="button" value="Add"/>
+  </form>
+</div>
