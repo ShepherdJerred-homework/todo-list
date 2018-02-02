@@ -2,12 +2,12 @@
   "name": "todo-list",
   "version": "1.0.0",
   "description": "Todo list web app",
-  "main": "index.js",
+  "main": "lib/app/index.js",
   "scripts": {
-    "start": "node app/index.js",
-    "dev": "nodemon app/index.js",
-    "test": "mocha",
-    "lint": "eslint app/"
+    "start": "node lib/app/index.js",
+    "dev": "nodemon lib/app/index.js",
+    "test": "mocha lib/test/",
+    "lint": "eslint lib/app/"
   },
   "repository": {
     "type": "git",
