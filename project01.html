@@ -1,0 +1,189 @@
+
+<!-- saved from url=(0060)https://cs.harding.edu/gfoust/classes/comp431/project01.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./project01_files/standard.css" type="text/css">
+    <title>Comp 431: Homework</title>
+    <!--<base target="_top">--><base href="." target="_top">
+    <style>
+      li { margin-bottom: 0.5em; margin-top: 0.5em; }
+    </style>
+  <style></style></head>
+  <body>
+    <p>
+      For this project you will be creating a “To-Do List”
+      application.  The user can add items to the list, check off items when
+      they are completed, and remove completed items from the list.  I will
+      grade your project using automated tests, so it is important that you
+      follow the following instructions.
+    </p>
+    <ol class="spaced">
+      <li>It should be a package: I should be able to install using <code>npm
+          install</code> and run using <code>node .</code>
+        <ul>
+          <li><em>Do not submit your <code>node_modules</code> or
+          your <code>sessions</code> directory!</em></li>
+        </ul>
+      </li>
+      <li>Use the package layout discussed in class
+        <ul>
+          <li><code>lib/</code> — all your JavaScript code</li>
+          <li><code>static/</code> — your static files</li>
+          <li><code>views/</code> — your Handlebars templates</li>
+        </ul>
+      </li>
+      <li>
+        Your program should contain the following modules:
+        <ul>
+          <li>
+            <code>lib/config</code> — exports a config object.  The
+            config object should have a <code>serverPort</code> property which
+            contains the port to listen on and a <code>sessionSecret</code>
+            property which contains the session secret.
+          </li>
+          <li>
+            <code>lib/app</code> — exports your express application
+            object.  This file should only configure your application object;
+            any middleware functions should be in a separate file.
+          </li>
+          <li>
+            <code>lib/server</code> — your main module.  It should start
+            the application from <code>lib/app</code> on the port designated
+            in <code>lib/config</code>.
+          </li>
+          <li>
+            <code>lib/todo/routes</code> — exports the router for your
+            To-Do component.  Your component should not make any assumptions
+            about where it is mounted; I should be able to mount it on any path
+            and it should work correctly.
+          </li>
+          <li>
+            <code>lib/todo/controllers</code> — exports a namespace
+            object containing the middleware functions for your To-Do
+            component.
+          </li>
+        </ul>
+      </li>
+      <li>Your program should store a list of to-do items in the session.  You
+        should also store whether each item has been completed or not.  The
+        session only needs to be remembered as long as the server is
+        running—although you may find that a file-store is helpful
+        during development so that you don't have to re-enter items every time
+        you make a change to code.
+      </li>
+      <li>
+        Your program should handle the following HTTP requests
+        <ul>
+          <li>
+            <code>GET /</code> — HTML web page.  (This can simply be a file
+            in your <code>static</code> directory.)  It should contain the
+            text “Comp 431 Project 5”.  It should also have a link
+            to <code>/todo/</code>.
+          </li>
+          <li>
+            <code>GET /todo/</code> — HTML web page.  This should be the main
+            interface for the To-Do application.  It is described further below.
+          </li>
+          <li>
+            <code>GET /styles/todo.css</code> — CSS file.  (This can
+            simply be a file in your <code>static</code> directory.)  This
+            should be a stylesheet used by your To-Do page.  You should have
+            at least three CSS rules in the file.
+          </li>
+          <li>
+            <code>POST /todo/add</code> — This should accept a
+            URL-encoded form with a parameter named <code>item</code>.  The
+            item should be added to the end of the list of to-do items.  The
+            server should then respond by issuing a redirect to the main To-Do
+            web page.
+          </li>
+          <li>
+            <code>POST /todo/save</code> — This should accept a
+            URL-encoded form with zero or more parameters
+            named <code>item<var>N</var></code>, where <var>N</var> is a
+            number
+            (<code>item0</code>, <code>item1</code>, <code>item2</code>,
+            …).  If the value of
+            parameter <code>item<var>N</var></code> is <code>"done"</code>
+            then item <var>N</var> in the to-do list should be
+            marked <em>done</em> in the session.  (The first item should be
+            item 0.) If not, then item <var>N</var> in the to-do list should
+            not be marked <em>done</em> in the session.  The server should
+            then respond by issuing a redirect to the main To-Do web page.
+          </li>
+          <li>
+            <code>POST /todo/remove</code> — This should accept a
+            URL-encoded from with zero or more parameters
+            named <code>item<var>N</var></code>, where <var>N</var> is a
+            number.  If the value of parameter <code>item<var>N</var></code>
+            is <code>"done"</code> then item <var>N</var> in the to-do list
+            should be removed from the session.  If not, then
+            item <var>N</var> should be left in the session and should not be
+            marked <em>done</em>.  The items left in the session should have
+            the same relative ordering.  The server should then respond by
+            issuing a redirect to the main To-Do web page.
+          </li>
+        </ul>
+      </li>
+      <li>You should use a Handlebars template to generate your To-Do List
+        web page.</li>
+      <li>The To-Do List web page should follow the basic format below.
+        <ul>
+          <li>The to-do items should appear in the page in the order in which
+            they are stored in the session</li>
+          <li>Each item should have a checkbox</li>
+          <li>If the item is marked <em>done</em> in the session then its
+            checkbox should initially be checked</li>
+          <li>As long as there is at least one item you should have a
+            “Save” and a “Remove Checked” button.</li>
+          <li>If no to-do items are in the session, the page should say
+            “No to-do items” and not have a “Save” or
+            “Remove Checked” button.</li>
+          <li>You should have an input element to enter a new item, as well as
+            a button which says "Add".  The text input should have focus when
+            the page first loads.  Pressing <code>Enter</code> in the text box
+            should submit the form.</li>
+          <li>Remember that checkboxes submit their name/value if they are
+            checked and submit nothing if they are not checked.</li>
+          <li>Remember that the submit button can take
+            a <code>formaction</code> attribute.  This will allow one form to
+            submit to different URLs depending on which submit button was
+            clicked.</li>
+        </ul>
+        I suggest you use the HTML below as a starting point for your
+        template.  (You will need to view the page source to see the HTML.)
+    <div class="example">
+      <h1>To-Do List</h1>
+      <table>
+        <tbody><tr>
+          <td><input type="checkbox" checked=""></td>
+          <td>Learn Express</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" checked=""></td>
+          <td>Learn Handlebars</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td>Get lots of practice</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td>Conquer the world</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="button" value="Save">
+            <input type="button" value="Remove Checked">
+          </td>
+        </tr>
+      </tbody></table>
+      <p>
+        Add new item: <input type="text" placeholder="Enter item description" style="width: 60ex" autofocus="" required="">
+        <input type="button" value="Add">
+      </p>
+    </div>
+      </li>
+    </ol>
+  
+
+</body></html>
